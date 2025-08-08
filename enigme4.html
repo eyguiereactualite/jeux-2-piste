@@ -6,27 +6,25 @@
   <title>Énigme 4</title>
   <link rel="stylesheet" href="style.css">
   <style>
-    .color-buttons {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin: 20px 0;
+    .color-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin: 30px 0;
     }
 
     .color-btn {
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
+      height: 80px;
+      border-radius: 15px;
       border: none;
-      opacity: 0.9;
+      opacity: 0.95;
       cursor: pointer;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-      transition: transform 0.2s;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+      transition: transform 0.2s ease;
     }
 
     .color-btn:active {
-      transform: scale(0.95);
+      transform: scale(0.97);
     }
 
     .blue { background-color: #007bff; }
@@ -34,9 +32,8 @@
     .red { background-color: #dc3545; }
     .yellow { background-color: #ffc107; }
 
-    .disabled {
-      opacity: 0.4;
-      cursor: default;
+    .color-btn.clicked {
+      /* aucune couleur modifiée quand cliqué */
     }
   </style>
 </head>
@@ -46,19 +43,16 @@
     <img src="images/salon-tele.png" alt="Télévision dans le salon" class="plan">
 
     <p class="question">
-      Près de la boîte à images, un étrange jeu de couleurs a été laissé.  
-      Saurez-vous retrouver la bonne séquence pour activer le mécanisme secret ?
+      Près de la boîte à images, une séquence colorée a été cachée.  
+      Elle t’ouvrira la suite si tu la découvres… et la reproduis sans te tromper.
     </p>
 
-    <div class="color-buttons">
+    <div class="color-grid">
       <button class="color-btn blue" onclick="ajouterCouleur('bleu')"></button>
       <button class="color-btn green" onclick="ajouterCouleur('vert')"></button>
       <button class="color-btn red" onclick="ajouterCouleur('rouge')"></button>
       <button class="color-btn yellow" onclick="ajouterCouleur('jaune')"></button>
     </div>
-
-    <p id="sequence">Séquence : <span id="ordre"></span></p>
-    <button onclick="validerCouleurs()">Valider</button>
 
     <div id="indice-section">
       <button id="btn-indice" disabled>Indice (5:00)</button>
@@ -68,33 +62,26 @@
   <script>
     let sequence = [];
     const bonneSequence = ["bleu", "vert", "rouge", "jaune"];
-    const spanOrdre = document.getElementById("ordre");
 
     function ajouterCouleur(couleur) {
-      if (sequence.length >= 4) return;
       sequence.push(couleur);
-      spanOrdre.textContent = sequence.join(" → ");
-    }
 
-    function validerCouleurs() {
-      if (sequence.length !== 4) {
-        alert("Tu dois choisir 4 couleurs !");
-        return;
+      // Ne garde que les 4 derniers
+      if (sequence.length > 4) {
+        sequence.shift();
       }
 
-      const correct = sequence.every((c, i) => c === bonneSequence[i]);
-
-      if (correct) {
-        alert("Bravo ! Tu as trouvé la bonne combinaison !");
-        window.location.href = "enigme5.html";
-      } else {
-        alert("Ce n’est pas le bon ordre. Réessaie !");
-        sequence = [];
-        spanOrdre.textContent = "";
+      // Vérifie automatiquement si la séquence est correcte
+      if (sequence.length === 4) {
+        const correcte = bonneSequence.every((c, i) => c === sequence[i]);
+        if (correcte) {
+          alert("Bien joué ! Tu as trouvé la bonne combinaison !");
+          window.location.href = "enigme5.html"; // prochaine énigme
+        }
       }
     }
 
-    // Indice timer
+    // Timer indice
     let secondsLeft = 300;
     const btnIndice = document.getElementById("btn-indice");
 
@@ -109,7 +96,7 @@
         btnIndice.disabled = false;
         btnIndice.innerText = "Voir l’indice";
         btnIndice.onclick = () => {
-          alert("Cherche autour de la télévision. Tu trouveras 4 papiers colorés avec un chiffre chacun. Ils te donnent l’ordre pour cliquer sur les couleurs !");
+          alert("Quatre papiers de couleur sont cachés près de la télévision. Chaque couleur contient un chiffre. Rassemble-les pour connaître l’ordre à suivre.");
         };
       }
     }, 1000);
