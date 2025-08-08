@@ -17,24 +17,22 @@
       height: 80px;
       border-radius: 15px;
       border: none;
-      opacity: 0.95;
       cursor: pointer;
       box-shadow: 0 3px 6px rgba(0,0,0,0.15);
       transition: transform 0.2s ease;
+      -webkit-tap-highlight-color: transparent; /* supprime flash bleu mobile */
+      outline: none;
     }
 
-    .color-btn:active {
-      transform: scale(0.97);
+    .color-btn:focus {
+      outline: none;
+      box-shadow: none;
     }
 
     .blue { background-color: #007bff; }
     .green { background-color: #28a745; }
     .red { background-color: #dc3545; }
     .yellow { background-color: #ffc107; }
-
-    .color-btn.clicked {
-      /* aucune couleur modifiée quand cliqué */
-    }
   </style>
 </head>
 <body>
@@ -66,22 +64,20 @@
     function ajouterCouleur(couleur) {
       sequence.push(couleur);
 
-      // Ne garde que les 4 derniers
       if (sequence.length > 4) {
-        sequence.shift();
+        sequence.shift(); // garde les 4 derniers clics
       }
 
-      // Vérifie automatiquement si la séquence est correcte
       if (sequence.length === 4) {
-        const correcte = bonneSequence.every((c, i) => c === sequence[i]);
-        if (correcte) {
+        const correct = bonneSequence.every((c, i) => c === sequence[i]);
+        if (correct) {
           alert("Bien joué ! Tu as trouvé la bonne combinaison !");
-          window.location.href = "enigme5.html"; // prochaine énigme
+          window.location.href = "enigme5.html";
         }
       }
     }
 
-    // Timer indice
+    // Indice timer
     let secondsLeft = 300;
     const btnIndice = document.getElementById("btn-indice");
 
@@ -96,7 +92,7 @@
         btnIndice.disabled = false;
         btnIndice.innerText = "Voir l’indice";
         btnIndice.onclick = () => {
-          alert("Quatre papiers de couleur sont cachés près de la télévision. Chaque couleur contient un chiffre. Rassemble-les pour connaître l’ordre à suivre.");
+          alert("Quatre papiers de couleur sont cachés près de la télévision. Chaque couleur contient un chiffre. Ils te donnent l’ordre à suivre.");
         };
       }
     }, 1000);
