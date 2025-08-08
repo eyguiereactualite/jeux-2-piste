@@ -108,9 +108,9 @@
 
     function ajouterSymbole(symbole) {
       sequence.push(symbole);
-      if (sequence.length > 3) sequence.shift();
+      if (sequence.length > 4) sequence.shift();
 
-      if (sequence.length === 3) {
+      if (sequence.length === 4) {
         const correct = bonneSequence.every((s, i) => s === sequence[i]);
         if (correct) {
           alert("Tu as percé le secret du ciel 🌌 !");
