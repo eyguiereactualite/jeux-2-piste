@@ -12,12 +12,11 @@
     <img src="images/table-verre.png" alt="Table en verre du salon" class="plan">
 
     <p class="question">
-      Autour de la table en verre se cachent <strong>6 morceaux de message</strong>.  
-      Chacun contient un mot.  
-      Trouve-les, remets-les dans le bon ordre et tape la phrase complète ici pour continuer.
+      Autour d’un endroit où l’on se réunit chaque jour, un message a été brisé en plusieurs morceaux.  
+      Seuls ceux qui observent bien et mettent tout ensemble trouveront le chemin vers le code secret.
     </p>
 
-    <input type="text" id="reponse" placeholder="Ta phrase ici">
+    <input type="text" id="reponse" placeholder="Entre la phrase ici">
     <button onclick="validerReponse()">Valider</button>
 
     <div id="indice-section">
@@ -40,20 +39,29 @@
         btnIndice.disabled = false;
         btnIndice.innerText = "Voir l’indice";
         btnIndice.onclick = () => {
-          alert("Certains mots aiment bien se cacher sous, derrière ou entre les objets que l'on utilise tous les jours à table.");
+          alert("Cherche autour de la table. Il y a plusieurs mots cachés sur des petits papiers. Remets-les dans l’ordre pour trouver une phrase !");
         };
       }
     }, 1000);
 
     function validerReponse() {
       const reponse = document.getElementById("reponse").value.trim().toLowerCase();
-      const bonneReponse = "le code est dans le placard blanc"; // adapte-le selon les vrais mots
+      const phraseCorrecte = "le code est sous la chaise";
 
-      if (reponse === bonneReponse) {
-        alert("Bravo ! Tu sais maintenant où est caché le code !");
-        window.location.href = "enigme4.html"; // prochaine étape
+      if (reponse === phraseCorrecte) {
+        // Phrase correcte → on demande d'entrer le code trouvé sous la chaise
+        const codeTrouvé = prompt("Parfait ! Maintenant regarde sous la chaise. Entre ici le code que tu y as trouvé :");
+        const codeAttendu = "9271"; // Tu peux changer ce code !
+
+        if (codeTrouvé && codeTrouvé.trim() === codeAttendu) {
+          alert("Bravo ! Tu as trouvé le code !");
+          window.location.href = "enigme4.html"; // prochaine énigme
+        } else {
+          alert("Ce n’est pas le bon code. Regarde bien sous la chaise !");
+        }
+
       } else {
-        alert("Hmm... ce n'est pas tout à fait la bonne phrase !");
+        alert("Hmm… cette phrase ne semble pas complète ou correcte.");
       }
     }
   </script>
