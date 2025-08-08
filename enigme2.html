@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Énigme 2</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Énigme 2</h1>
+    <img src="images/salon-frigo.png" alt="Frigo dans le salon" class="plan">
+
+    <p class="question">
+      Une feuille a été posée sur l’un des géants les plus froids de la maison…  
+      Elle a l’air vide, mais ce n’est qu’une illusion.  
+      Il te manque quelque chose pour révéler son secret.
+    </p>
+
+    <input type="text" id="reponse" placeholder="Ta réponse ici">
+    <button onclick="validerReponse()">Valider</button>
+
+    <div id="indice-section">
+      <button id="btn-indice" disabled>Indice (5:00)</button>
+    </div>
+  </div>
+
+  <script>
+    let secondsLeft = 300;
+    const btnIndice = document.getElementById("btn-indice");
+
+    const timer = setInterval(() => {
+      secondsLeft--;
+      const minutes = Math.floor(secondsLeft / 60);
+      const seconds = secondsLeft % 60;
+      btnIndice.innerText = `Indice (${minutes}:${seconds.toString().padStart(2, '0')})`;
+
+      if (secondsLeft <= 0) {
+        clearInterval(timer);
+        btnIndice.disabled = false;
+        btnIndice.innerText = "Voir l’indice";
+        btnIndice.onclick = () => {
+          alert("Certains messages ne se voient que lorsqu’on les éclaire de la bonne façon… peut-être que l’objet est ailleurs ?");
+        };
+      }
+    }, 1000);
+
+    function validerReponse() {
+      const reponse = document.getElementById("reponse").value.trim().toLowerCase();
+      const bonneReponse = "banane"; // à adapter selon le mot écrit au stylo UV
+
+      if (reponse === bonneReponse) {
+        alert("Bien joué ! Tu as trouvé le mot caché !");
+        window.location.href = "enigme3.html"; // à créer ensuite
+      } else {
+        alert("Essaie encore, regarde bien !");
+      }
+    }
+  </script>
+</body>
+</html>
