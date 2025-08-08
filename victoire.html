@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🎉 Bravo !</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom, #a8e0ff, #70cad1);
+      font-family: 'Arial Rounded MT Bold', Arial, sans-serif;
+      color: #003366;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      text-align: center;
+      padding: 20px;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 20px;
+      color: #0047ab;
+      animation: bounce 1s infinite alternate;
+    }
+
+    .message {
+      font-size: 20px;
+      margin-bottom: 30px;
+      animation: fadeInUp 1.5s ease forwards;
+    }
+
+    .treasure-img {
+      width: 100%;
+      max-width: 300px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+      animation: zoomIn 1s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes bounce {
+      0% {transform: translateY(0);}
+      100% {transform: translateY(-10px);}
+    }
+
+    @keyframes zoomIn {
+      from {
+        transform: scale(0.8);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    /* Confettis */
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: #fff;
+      border-radius: 50%;
+      animation: fall 5s linear infinite;
+      opacity: 0.8;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-20px) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(120vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎉 Félicitations !</h1>
+    <p class="message">Tu as réussi toutes les énigmes et tu es arrivé au bout du jeu de piste !</p>
+    <p class="message">Mais... il te reste une dernière étape : <strong>le trésor est caché dans le micro-ondes</strong> !</p>
+    <img src="images/salon-comptoir.png" alt="Indice final" class="treasure-img" />
+  </div>
+
+  <script>
+    // Génère des confettis aléatoires
+    for (let i = 0; i < 80; i++) {
+      const confetti = document.createElement("div");
+      confetti.classList.add("confetti");
+      confetti.style.left = Math.random() * 100 + "vw";
+      confetti.style.top = Math.random() * -100 + "px";
+      confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 70%)`;
+      confetti.style.animationDelay = Math.random() * 5 + "s";
+      confetti.style.width = confetti.style.height = Math.random() * 10 + 5 + "px";
+      document.body.appendChild(confetti);
+    }
+  </script>
+</body>
+</html>
