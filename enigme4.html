@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Énigme 4</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .color-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+
+    .color-btn {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      border: none;
+      opacity: 0.9;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      transition: transform 0.2s;
+    }
+
+    .color-btn:active {
+      transform: scale(0.95);
+    }
+
+    .blue { background-color: #007bff; }
+    .green { background-color: #28a745; }
+    .red { background-color: #dc3545; }
+    .yellow { background-color: #ffc107; }
+
+    .disabled {
+      opacity: 0.4;
+      cursor: default;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Énigme 4</h1>
+    <img src="images/salon-tele.png" alt="Télévision dans le salon" class="plan">
+
+    <p class="question">
+      Près de la boîte à images, un étrange jeu de couleurs a été laissé.  
+      Saurez-vous retrouver la bonne séquence pour activer le mécanisme secret ?
+    </p>
+
+    <div class="color-buttons">
+      <button class="color-btn blue" onclick="ajouterCouleur('bleu')"></button>
+      <button class="color-btn green" onclick="ajouterCouleur('vert')"></button>
+      <button class="color-btn red" onclick="ajouterCouleur('rouge')"></button>
+      <button class="color-btn yellow" onclick="ajouterCouleur('jaune')"></button>
+    </div>
+
+    <p id="sequence">Séquence : <span id="ordre"></span></p>
+    <button onclick="validerCouleurs()">Valider</button>
+
+    <div id="indice-section">
+      <button id="btn-indice" disabled>Indice (5:00)</button>
+    </div>
+  </div>
+
+  <script>
+    let sequence = [];
+    const bonneSequence = ["bleu", "vert", "rouge", "jaune"];
+    const spanOrdre = document.getElementById("ordre");
+
+    function ajouterCouleur(couleur) {
+      if (sequence.length >= 4) return;
+      sequence.push(couleur);
+      spanOrdre.textContent = sequence.join(" → ");
+    }
+
+    function validerCouleurs() {
+      if (sequence.length !== 4) {
+        alert("Tu dois choisir 4 couleurs !");
+        return;
+      }
+
+      const correct = sequence.every((c, i) => c === bonneSequence[i]);
+
+      if (correct) {
+        alert("Bravo ! Tu as trouvé la bonne combinaison !");
+        window.location.href = "enigme5.html";
+      } else {
+        alert("Ce n’est pas le bon ordre. Réessaie !");
+        sequence = [];
+        spanOrdre.textContent = "";
+      }
+    }
+
+    // Indice timer
+    let secondsLeft = 300;
+    const btnIndice = document.getElementById("btn-indice");
+
+    const timer = setInterval(() => {
+      secondsLeft--;
+      const minutes = Math.floor(secondsLeft / 60);
+      const seconds = secondsLeft % 60;
+      btnIndice.innerText = `Indice (${minutes}:${seconds.toString().padStart(2, '0')})`;
+
+      if (secondsLeft <= 0) {
+        clearInterval(timer);
+        btnIndice.disabled = false;
+        btnIndice.innerText = "Voir l’indice";
+        btnIndice.onclick = () => {
+          alert("Cherche autour de la télévision. Tu trouveras 4 papiers colorés avec un chiffre chacun. Ils te donnent l’ordre pour cliquer sur les couleurs !");
+        };
+      }
+    }, 1000);
+  </script>
+</body>
+</html>
