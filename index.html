@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jeu de Piste</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Bienvenue !</h1>
+    <img src="images/plan-maison.png" alt="Plan de la maison" class="plan">
+    <p class="intro">
+      Tu es prête pour une aventure magique dans la maison ?<br>
+      Il y a <strong>10 énigmes</strong> à résoudre.<br>
+      Lis bien les instructions, fais les actions dans la vraie vie, et entre les bonnes réponses !
+    </p>
+    <button onclick="startGame()">Commencer l'aventure 🔍</button>
+  </div>
+
+  <script>
+    function startGame() {
+      window.location.href = "enigme1.html";
+    }
+  </script>
+</body>
+</html>
