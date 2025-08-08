@@ -12,8 +12,8 @@
     <img src="images/salle-de-bain.png" alt="Salle de bain" class="plan">
     
     <p class="question">
-      Va dans la salle de bain, ouvre le placard, prends la feuille collée à l’intérieur.
-      Lis-la dans le miroir pour découvrir le mot à taper ici.
+      Commence par explorer la pièce où l’on se brosse les dents. Regarde bien à l’intérieur des endroits fermés.  
+      Une feuille étrange t’y attend, mais seule une astuce de reflet te révélera le mot secret.
     </p>
 
     <input type="text" id="reponse" placeholder="Ta réponse ici">
@@ -39,7 +39,7 @@
         btnIndice.disabled = false;
         btnIndice.innerText = "Voir l’indice";
         btnIndice.onclick = () => {
-          alert("Astuce : Lis la feuille dans un miroir pour voir le vrai mot !");
+          alert("Astuce : Le message semble incompréhensible au premier regard… Mais parfois, pour tout voir correctement, il suffit de changer de point de vue.");
         };
       }
     }, 1000);
