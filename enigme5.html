@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Énigme 5</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial Rounded MT Bold', Arial, sans-serif;
+      background-color: #ffffff;
+      color: #003366;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      text-align: center;
+      padding: 20px;
+      max-width: 400px;
+    }
+
+    h1 {
+      font-size: 28px;
+      color: #0047ab;
+    }
+
+    .plan {
+      width: 100%;
+      max-width: 300px;
+      margin: 20px 0;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0, 71, 171, 0.1);
+    }
+
+    .question {
+      font-size: 16px;
+      line-height: 1.5;
+      margin-bottom: 30px;
+    }
+
+    .symbol-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin: 30px 0;
+    }
+
+    .symbol-btn {
+      height: 80px;
+      font-size: 32px;
+      border-radius: 15px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+      transition: transform 0.2s ease;
+      -webkit-tap-highlight-color: transparent;
+      outline: none;
+      background-color: #f0f0f0;
+    }
+
+    .symbol-btn:focus,
+    .symbol-btn:hover,
+    .symbol-btn:active {
+      outline: none;
+      box-shadow: none;
+      background-color: #f0f0f0;
+      filter: none;
+    }
+
+    .symbol-btn:active {
+      transform: scale(1.05);
+    }
+
+    #btn-indice {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Énigme 5</h1>
+    <img src="images/salon-comptoir.png" alt="Comptoir du salon" class="plan">
+
+    <p class="question">
+      Trois fragments brillants ont été perdus autour du comptoir.  
+      Si tu les rassembles dans le bon ordre… un secret s’ouvrira à toi.
+    </p>
+
+    <div class="symbol-grid">
+      <button class="symbol-btn" onclick="ajouterSymbole('⭐')">⭐</button>
+      <button class="symbol-btn" onclick="ajouterSymbole('🌙')">🌙</button>
+      <button class="symbol-btn" onclick="ajouterSymbole('☀️')">☀️</button>
+      <button class="symbol-btn" onclick="ajouterSymbole('⭐')">⭐</button>
+    </div>
+
+    <div id="indice-section">
+      <button id="btn-indice" disabled>Indice (5:00)</button>
+    </div>
+  </div>
+
+  <script>
+    let sequence = [];
+    const bonneSequence = ["🌙", "☀️", "⭐"]; // <-- ordre à personnaliser
+
+    function ajouterSymbole(symbole) {
+      sequence.push(symbole);
+      if (sequence.length > 3) sequence.shift();
+
+      if (sequence.length === 3) {
+        const correct = bonneSequence.every((s, i) => s === sequence[i]);
+        if (correct) {
+          alert("Tu as percé le secret du ciel 🌌 !");
+          window.location.href = "victoire.html"; // vers la page de fin
+        }
+      }
+    }
+
+    // Timer pour l'indice
+    let secondsLeft = 300;
+    const btnIndice = document.getElementById("btn-indice");
+
+    const timer = setInterval(() => {
+      secondsLeft--;
+      const minutes = Math.floor(secondsLeft / 60);
+      const seconds = secondsLeft % 60;
+      btnIndice.innerText = `Indice (${minutes}:${seconds.toString().padStart(2, '0')})`;
+
+      if (secondsLeft <= 0) {
+        clearInterval(timer);
+        btnIndice.disabled = false;
+        btnIndice.innerText = "Voir l’indice";
+        btnIndice.onclick = () => {
+          alert("Cherche trois symboles autour du comptoir : lune, soleil et étoile. Ils t’indiqueront dans quel ordre cliquer.");
+        };
+      }
+    }, 1000);
+  </script>
+</body>
+</html>
